@@ -1,0 +1,14 @@
+.video {
+    position: relative;
+    z-index: 100;
+    display: inline-block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    max-width: 300px;
+    background: rgba(255,255,255,0.5);
+    margin: .25rem;
+    padding: .25rem;
+    text-align: center;
+}
