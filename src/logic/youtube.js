@@ -1,6 +1,7 @@
 import axios from 'axios';
 const KEY = 'AIzaSyDB95K_UPZjepFNtQ6wqqGPtgL7m1LDMvc';
 const basicQueary = 'https://www.googleapis.com/youtube/v3/search';
+const videoQuery = 'https://www.googleapis.com/youtube/v3/videos';
 
 
 async function getResults() {
@@ -8,7 +9,17 @@ async function getResults() {
         part: 'snippet',
         maxResults: 10,
         key: KEY,
-        q: "Blippi"
+        q: "ComeOutsideTV"
+    }});
+    return result.data.items;
+}
+
+async function get() {
+    const result = await axios.get(videoQuery,{params: {
+        id: 'Z9YTB5XkQdg',
+        part: 'contentDetails',
+        key: KEY,
+        
     }});
     return result.data.items;
 }
@@ -16,3 +27,8 @@ async function getResults() {
 export async function getItems() {
     return await getResults();
 }
+
+export async function getVideo() {
+    return await get();
+}
+
