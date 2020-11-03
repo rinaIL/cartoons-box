@@ -1,22 +1,22 @@
 import axios from 'axios';
-const KEY = 'AIzaSyDB95K_UPZjepFNtQ6wqqGPtgL7m1LDMvc';
+const KEY = 'AIzaSyCI1d35GUFkFt8Y5NDXRAwaEdVlfwo-38Q';
 const basicQueary = 'https://www.googleapis.com/youtube/v3/search';
 const videoQuery = 'https://www.googleapis.com/youtube/v3/videos';
 
 
-async function getResults() {
+async function getResults(query) {
     const result = await axios.get(basicQueary,{params: {
         part: 'snippet',
-        maxResults: 10,
+        maxResults: 3,
         key: KEY,
-        q: "ComeOutsideTV"
+        q: query
     }});
     return result.data.items;
 }
 
-async function get() {
+async function get(id) {
     const result = await axios.get(videoQuery,{params: {
-        id: 'Z9YTB5XkQdg',
+        id: id,
         part: 'contentDetails',
         key: KEY,
         
@@ -24,11 +24,11 @@ async function get() {
     return result.data.items;
 }
 
-export async function getItems() {
-    return await getResults();
+export async function getItems(query) {
+    return await getResults(query);
 }
 
-export async function getVideo() {
-    return await get();
+export async function getVideo(id) {
+    return await get(id);
 }
 
