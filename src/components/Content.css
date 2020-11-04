@@ -1,4 +1,4 @@
-.video {
+.video  {
     position: relative;
     z-index: 100;
     display: inline-block;
@@ -12,3 +12,4 @@
     padding: .25rem;
     text-align: center;
 }
+

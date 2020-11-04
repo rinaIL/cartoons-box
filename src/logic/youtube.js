@@ -1,5 +1,5 @@
 import axios from 'axios';
-const KEY = 'AIzaSyCI1d35GUFkFt8Y5NDXRAwaEdVlfwo-38Q';
+const KEY = 'AIzaSyDB95K_UPZjepFNtQ6wqqGPtgL7m1LDMvc';
 const basicQueary = 'https://www.googleapis.com/youtube/v3/search';
 const videoQuery = 'https://www.googleapis.com/youtube/v3/videos';
 
@@ -7,7 +7,7 @@ const videoQuery = 'https://www.googleapis.com/youtube/v3/videos';
 async function getResults(query) {
     const result = await axios.get(basicQueary,{params: {
         part: 'snippet',
-        maxResults: 3,
+        maxResults:3,
         key: KEY,
         q: query
     }});

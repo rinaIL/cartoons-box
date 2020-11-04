@@ -40,6 +40,9 @@ class Content extends React.Component {
             data.push(obj)
         }
 
+        this.setState({videos:data});
+        console.log("before takes duration", this.state.videos);
+
         const videosWithDuration = []
 
         await Promise.all(data.map(async (videosPerKeyword)=> {
@@ -64,7 +67,7 @@ class Content extends React.Component {
         }))
 
         
-        this.setState({videos:data});
+
         this.setState({videosWithDuration:videosWithDuration});
       
         console.log("videosWithDuration", this.state.videosWithDuration);
@@ -95,7 +98,8 @@ class Content extends React.Component {
           return (          
               <div>
                 {db.getCollection('keywords').map((k) => {
-                    return <div key={k}><h3>{k} {this.state.videos.lenght > 0 ? this.getVideosCart(k):''}</h3></div>
+                    {console.log("Keyword", k)}
+                    return <div key={k} className="content"><h3>{k} {this.state.videos.length > 0 ? this.getVideosCart(k):''}</h3></div>
                 })}
               </div>          
           );
@@ -106,12 +110,13 @@ class Content extends React.Component {
 class VideoCard extends React.Component {
     render() {
         const video = this.props.video;
+        console.log("VideoCard shows", video);
         return (
-            <article>
-                <h4>{video.title}</h4>
+            <div className="video">
                 <div><img src={video.picture}/></div>
+                <h5>{video.title}</h5>
                 <p>Click her for more</p>
-            </article>
+            </div>
         )
     }
 }
