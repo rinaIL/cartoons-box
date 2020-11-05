@@ -23,7 +23,7 @@ for (let k of keywords) {
 class Content extends React.Component {
     constructor(props){
         super(props);
-        this.state = { videos:[],videosWithDuration:[]};
+        this.state = { videos:[]};
     }
 
     async componentDidMount() {
@@ -43,21 +43,19 @@ class Content extends React.Component {
         this.setState({videos:data});
         console.log("before takes duration", this.state.videos);
 
-        const videosWithDuration = []
 
         await Promise.all(data.map(async (videosPerKeyword)=> {
             Promise.all(videosPerKeyword.data.map(async (video) => {
                 if (typeof(video.id.videoId) !=="undefined"){
                     const videoDetails = await getVideo(video.id.videoId);
-                    Promise.all(videoDetails.map(async (details) => {                       
+                    Promise.all(videoDetails.map(async (details) => {  
+                        console.log("Details ***************",moment.duration(details.contentDetails.duration).asMinutes());                     
                         const duration = parseInt(moment.duration(details.contentDetails.duration).asMinutes(),10);
                         const durationHour = parseInt(moment.duration(details.contentDetails.duration).asHours(),10);                        
-                        if (duration !== 0 && durationHour === 0) {
-                            const obj = {
-                                id:video.id.videoId,
-                                duration: duration
-                            }
-                            videosWithDuration.push(obj);
+                        if (duration !== 0 && durationHour === 0 && duration < 16) {
+                            video.duration = duration;                           
+                        }else {
+                            video.duration = null;
                         }
 
                     }))
@@ -66,28 +64,28 @@ class Content extends React.Component {
 
         }))
 
-        
-
-        this.setState({videosWithDuration:videosWithDuration});
-      
-        console.log("videosWithDuration", this.state.videosWithDuration);
+        console.log("videos with duration", this.state.videos);
 
     }
 
     getVideosCart(key) {
         console.log("state videos", this.state.videos);
 
-        const filteredVideo =  this.state.videos.filter((obj) => obj.term === key);
+        const filteredVideo =  this.state.videos.filter((obj) => obj.term === key ) ;
         console.log("DATA", filteredVideo);
-
-            
+           
         const videoCard =  filteredVideo[0].data.map((v) => {
             console.log("VIDEO", v);
-            const obj = {
-                title:v.snippet.title,
-                picture:v.snippet.thumbnails.medium.url
+            if(v.duration !== null && v.id.kind !== "youtube#channel"){
+                const obj = {
+                    title:v.snippet.title,
+                    picture:v.snippet.thumbnails.medium.url,
+                    id:v.id.videoId,
+                    duration:v.duration
+                }
+                return <VideoCard key={v.id.videoId} video={obj} />
             }
-            return <VideoCard key={v.id.videoId} video={obj} />
+
         })
 
         return videoCard;
@@ -108,14 +106,18 @@ class Content extends React.Component {
 }
 
 class VideoCard extends React.Component {
-    render() {
-        const video = this.props.video;
-        console.log("VideoCard shows", video);
+
+    saveSelectedVideo() {
+        db.addValue('selectedVideo', this.props.video);
+    }
+    
+    render() {       
+        const video = this.props.video;              
         return (
             <div className="video">
                 <div><img src={video.picture}/></div>
                 <h5>{video.title}</h5>
-                <p>Click her for more</p>
+                <p><input type="checkbox" onChange={()=>this.saveSelectedVideo()} ></input></p>
             </div>
         )
     }

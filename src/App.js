@@ -10,6 +10,7 @@ import {
 import './App.css';
 import Content from "./components/Content";
 import ToSetKeywords from "./components/ToSetKeywords";
+import VideoApp from "./components/VideoApp";
 
 class App extends React.Component {
  
@@ -19,6 +20,7 @@ class App extends React.Component {
               <Switch>
                   <Route exact path="/"><Content/></Route>
                   <Route path="/admin"><ToSetKeywords/></Route>
+                  <Route path="/app"><VideoApp/></Route>
               </Switch>
           </Router>        
        

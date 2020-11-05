@@ -7,7 +7,7 @@ const videoQuery = 'https://www.googleapis.com/youtube/v3/videos';
 async function getResults(query) {
     const result = await axios.get(basicQueary,{params: {
         part: 'snippet',
-        maxResults:3,
+        maxResults:5,
         key: KEY,
         q: query
     }});
