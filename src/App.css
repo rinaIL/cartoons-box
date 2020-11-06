@@ -2,7 +2,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
-.content {
+.contentApp {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Content.css';
 import {getItems, getVideo} from '../logic/youtube';
+import Checkbox from './Checkbox';
 import db from '../logic/database';
 import moment from 'moment';
 
@@ -41,7 +42,6 @@ class Content extends React.Component {
         }
 
         this.setState({videos:data});
-        console.log("before takes duration", this.state.videos);
 
 
         await Promise.all(data.map(async (videosPerKeyword)=> {
@@ -49,7 +49,6 @@ class Content extends React.Component {
                 if (typeof(video.id.videoId) !=="undefined"){
                     const videoDetails = await getVideo(video.id.videoId);
                     Promise.all(videoDetails.map(async (details) => {  
-                        console.log("Details ***************",moment.duration(details.contentDetails.duration).asMinutes());                     
                         const duration = parseInt(moment.duration(details.contentDetails.duration).asMinutes(),10);
                         const durationHour = parseInt(moment.duration(details.contentDetails.duration).asHours(),10);                        
                         if (duration !== 0 && durationHour === 0 && duration < 16) {
@@ -93,32 +92,43 @@ class Content extends React.Component {
        
  
     render() {
-          return (          
-              <div>
-                {db.getCollection('keywords').map((k) => {
-                    {console.log("Keyword", k)}
-                    return <div key={k} className="content"><h3>{k} {this.state.videos.length > 0 ? this.getVideosCart(k):''}</h3></div>
-                })}
-              </div>          
+          return ( 
+              
+            <div className='main container' >
+                
+                                {db.getCollection('keywords').map((k) => {
+                                    return ( 
+                                        <div className='ui container' style={{marginTop: '1em'}}  key={k}>
+                                            <div className='ui grid' >                                      
+                                                <div className="row" >                                                
+                                                    <div className="two wide column">{k} </div>
+                                                    {this.state.videos.length > 0 ? this.getVideosCart(k):''}                                                      
+                                                </div> 
+                                            </div> 
+                                        </div>                                        
+                                    )
+                                })}
+
+               
+            </div>
+
+          
           );
     }
 
 }
 
-class VideoCard extends React.Component {
-
-    saveSelectedVideo() {
-        db.addValue('selectedVideo', this.props.video);
-    }
-    
+class VideoCard extends React.Component {    
     render() {       
         const video = this.props.video;              
         return (
-            <div className="video">
-                <div><img src={video.picture}/></div>
-                <h5>{video.title}</h5>
-                <p><input type="checkbox" onChange={()=>this.saveSelectedVideo()} ></input></p>
-            </div>
+            <div className="three wide column" >
+                <div className="ui horizontal segment">
+                    <img  className ="ui small image" src={video.picture}/>
+                    <h5>{video.title}</h5>
+                    <Checkbox video ={this.props.video} />
+                </div>
+            </div>       
         )
     }
 }

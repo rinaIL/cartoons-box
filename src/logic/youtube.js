@@ -1,5 +1,5 @@
 import axios from 'axios';
-const KEY = 'AIzaSyDB95K_UPZjepFNtQ6wqqGPtgL7m1LDMvc';
+const KEY = 'AIzaSyCZ-Iq7Im35KKcF7xMk80NbbN6nb1RJ7nE';
 const basicQueary = 'https://www.googleapis.com/youtube/v3/search';
 const videoQuery = 'https://www.googleapis.com/youtube/v3/videos';
 

@@ -9,7 +9,7 @@ class ToSetKeywords extends React.Component {
 
     render() {
         return (
-            <div className="content">
+            <div className="contentApp">
                 <AddTosetItem />
                 <TosetList/>
             </div>
