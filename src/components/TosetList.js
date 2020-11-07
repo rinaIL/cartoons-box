@@ -22,15 +22,15 @@ class TosetList extends React.Component {
     }
 
     getItemReact(item) {
-        return <li>{item}</li>;
+        return <div className="item">{item}</div>;
     }
 
     render() {
         const itemsList = this.state.items.map(item => this.getItemReact(item));
         return (
-            <ul>
+            <div className ="ui list">
                 {itemsList}
-            </ul>
+            </div>
         )
     }
 }

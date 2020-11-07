@@ -17,6 +17,14 @@ class App extends React.Component {
   render() {
         return (  
           <Router> 
+                    <div className="ui secondary pointing menu">
+                        <a class="item">
+                          <Link to="/">Home</Link>
+                        </a>
+                        <a className="item">
+                          <Link to="/app">Video</Link>
+                        </a>
+                    </div>
               <Switch>
                   <Route exact path="/"><Content/></Route>
                   <Route path="/admin"><ToSetKeywords/></Route>
