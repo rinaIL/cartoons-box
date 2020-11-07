@@ -18,7 +18,7 @@ class App extends React.Component {
         return (  
           <Router> 
                     <div className="ui secondary pointing menu">
-                        <a class="item">
+                        <a className="item">
                           <Link to="/">Home</Link>
                         </a>
                         <a className="item">
